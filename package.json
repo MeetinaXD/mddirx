@@ -1,6 +1,6 @@
 {
   "name": "mddirx",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "an enhancing mddir",
   "main": "main.js",
   "bin": "main.js",
@@ -24,5 +24,9 @@
     "url": "https://github.com/MeetinaXD/mddirx/issues"
   },
   "homepage": "https://github.com/MeetinaXD/mddirx",
-  "_from": "mddir"
+  "_from": "mddir",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^16.2.0"
+  }
 }
