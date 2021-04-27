@@ -1,7 +1,7 @@
 {
   "name": "mddirx",
   "version": "1.0",
-  "description": "enhancing mddir",
+  "description": "an enhancing mddir",
   "main": "main.js",
   "bin": "main.js",
   "scripts": {
