@@ -1,2 +1,4 @@
 node_modules
 listOutput.md
+*.tgz
+.DS_Store

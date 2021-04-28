@@ -17,9 +17,15 @@ Created By `JohnByrneRepo`, Forked by `MeetinaXD`
 ### 用法
 
 ``` shell
-mddirx -i "<输入路径>" -o "<输出文件>" [--exclude | --include] "<欲包含或排除的文件(夹)正则表达式>" --dironly
+mddirx [-i] "<输入路径>" -o "<输出文件>" [--exclude | --include] "<欲包含或排除的文件(夹)正则表达式>" --dironly
+
+# 如：排除所有css文件
+mddirx ../src --exclude "\S*\.css"
+# 如：只包含所有C文件
+mddirx --include "\S*\.c"
 ```
 
+**注意：**`-i`选项是可空的。即如上示例，可以直接指定一个目录作为输入目录。
 
 ### 致谢
 

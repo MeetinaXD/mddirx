@@ -15,7 +15,6 @@ const argv = require('yargs')
   .option('i', {
     alias : 'input',
     demand: false,
-    default: '.',
     describe: 'the listing srouce, must be a direction',
     type: 'string'
   })
@@ -41,10 +40,17 @@ const argv = require('yargs')
   .recommendCommands()
   .argv
 
+
 argv.exclude = argv.exclude.trim()
 argv.include = argv.include.trim()
-argv.i = argv.i.trim()
 argv.o = argv.o.trim()
+
+if (!argv.i && argv._.length > 0){
+  argv.i = argv._[0].trim()
+}
+
+argv.i = argv.i || '.'
+argv.i = argv.i.trim()
 
 if (argv.exclude.length > 0 && argv.include.length > 0){
   console.log(colors.red('--exclude cannot use with --match!'))
@@ -62,7 +68,10 @@ var depth = 0;
 var exported = false;
 var outputFileName = argv.o;
 var searchPath = path.resolve(argv.i);
-var key = searchPath;//.replace(/\//g,'');
+console.log('Search from >>> ', searchPath);
+
+
+var key = searchPath;
 var startFolder = searchPath.split('/')[searchPath.split('/').length - 2];
 var startDepth = searchPath.split('/').length - 1;
 var currentWorkingDirectory = process.cwd();
@@ -91,7 +100,6 @@ const isContains = function(name){
       return true
     }
   }
-  console.log("exclude", name)
   return false
 }
 
@@ -152,6 +160,7 @@ var getFiles = function(path, key){
   });
 };
 
+var numFiles = 0;
 var listFolders = function(){
   var allParsed = true;
   var numFolders = 0;
@@ -162,11 +171,13 @@ var listFolders = function(){
         allParsed = false;
       }
       if(folders[key].parsed && !folders[key].logged){
+        numFiles += folders[key].files.length;
         folders[key].logged = true;
       }
     }
   }
   if(allParsed && !exported){
+    console.log(`Got ${colors.green(numFolders)} folders and ${colors.green(numFiles)} files.`);
     exported = true;
     generateMarkdown();
   }
@@ -213,7 +224,7 @@ var generateMarkdown = function(){
   addFolderName(key, 1);
 
   addSiblingfolderConnections();
-
+  console.log('Write to >>> ', currentWorkingDirectory + '/' + outputFileName);
   fs.writeFile(currentWorkingDirectory + '/' + outputFileName, markdownText, function(err){
     if (err) return;
   });
